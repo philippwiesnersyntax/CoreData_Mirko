@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Kurs" representedClassName="Kurs" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="modul" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="kurse" inverseEntity="Module"/>
+        <relationship name="syntaxInstitut" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SyntaxInstitut" inverseName="kurs" inverseEntity="SyntaxInstitut"/>
+    </entity>
+    <entity name="Module" representedClassName="Module" syncable="YES" codeGenerationType="class">
+        <attribute name="dauer" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="dozentname" optional="YES" attributeType="String"/>
+        <attribute name="modulname" optional="YES" attributeType="String"/>
+        <relationship name="kurse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Kurs" inverseName="modul" inverseEntity="Kurs"/>
+    </entity>
+    <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="kurs" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="syntax" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SyntaxInstitut" inverseName="teilnehmer" inverseEntity="SyntaxInstitut"/>
+    </entity>
+    <entity name="SyntaxInstitut" representedClassName="SyntaxInstitut" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="kurs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Kurs" inverseName="syntaxInstitut" inverseEntity="Kurs"/>
+        <relationship name="teilnehmer" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="syntax" inverseEntity="Person"/>
+    </entity>
 </model>
