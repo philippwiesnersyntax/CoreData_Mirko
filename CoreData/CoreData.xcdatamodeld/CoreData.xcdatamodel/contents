@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Kurs" representedClassName="Kurs" syncable="YES" codeGenerationType="class">
+    <entity name="App" representedClassName="App" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="modul" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="kurse" inverseEntity="Module"/>
-        <relationship name="syntaxInstitut" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SyntaxInstitut" inverseName="kurs" inverseEntity="SyntaxInstitut"/>
+        <attribute name="system" optional="YES" attributeType="String"/>
+        <relationship name="entwickler" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SyntaxInstitut" inverseName="apps" inverseEntity="SyntaxInstitut"/>
+    </entity>
+    <entity name="Batch" representedClassName="Batch" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="mitarbeiter" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SyntaxInstitut" inverseName="batch" inverseEntity="SyntaxInstitut"/>
+        <relationship name="modules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="batches" inverseEntity="Module"/>
+        <relationship name="teilnehmer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Teilnehmer" inverseName="batch" inverseEntity="Teilnehmer"/>
+    </entity>
+    <entity name="Kurs" representedClassName="Kurs" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="modul" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="themen" inverseEntity="Module"/>
     </entity>
     <entity name="Module" representedClassName="Module" syncable="YES" codeGenerationType="class">
         <attribute name="dauer" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="dozentname" optional="YES" attributeType="String"/>
         <attribute name="modulname" optional="YES" attributeType="String"/>
-        <relationship name="kurse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Kurs" inverseName="modul" inverseEntity="Kurs"/>
-    </entity>
-    <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="kurs" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="syntax" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SyntaxInstitut" inverseName="teilnehmer" inverseEntity="SyntaxInstitut"/>
+        <relationship name="batches" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Batch" inverseName="modules" inverseEntity="Batch"/>
+        <relationship name="themen" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kurs" inverseName="modul" inverseEntity="Kurs"/>
     </entity>
     <entity name="SyntaxInstitut" representedClassName="SyntaxInstitut" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="nachname" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="kurs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Kurs" inverseName="syntaxInstitut" inverseEntity="Kurs"/>
-        <relationship name="teilnehmer" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="syntax" inverseEntity="Person"/>
+        <relationship name="apps" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="App" inverseName="entwickler" inverseEntity="App"/>
+        <relationship name="batch" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Batch" inverseName="mitarbeiter" inverseEntity="Batch"/>
+    </entity>
+    <entity name="Teilnehmer" representedClassName="Teilnehmer" syncable="YES" codeGenerationType="class">
+        <attribute name="nachname" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="rolle" optional="YES" attributeType="String"/>
+        <relationship name="batch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Batch" inverseName="teilnehmer" inverseEntity="Batch"/>
     </entity>
 </model>
